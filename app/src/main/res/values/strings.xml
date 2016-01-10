@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">Notify</string>
+    <string name="gcm_send_message">Token retrieved and sent to server! You can now use gcmsender to
+        send downstream messages to this app.</string>
+    <string name="registering_message">Generating InstanceID token...</string>
+    <string name="token_error_message">An error occurred while either fetching the InstanceID token,
+        sending the fetched token to the server.</string>
+
+    <string name="gcm_senderId">549378215366</string>
+    <string name="gcm_ServerAPIkey">AIzaSyCZA3xTFBzLZvMsJNUqc7ZE2doCNCGZBxE</string>
+
+</resources>

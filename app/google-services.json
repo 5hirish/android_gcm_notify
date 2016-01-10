@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_id": "notify-1186",
+    "project_number": "549378215366",
+    "name": "Notify"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:549378215366:android:fd099fe0f3938cb4",
+        "client_id": "android:com.shirishkadam.notify",
+        "client_type": 1,
+        "android_client_info": {
+          "package_name": "com.shirishkadam.notify"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "cloud_messaging_service": {
+          "status": 2,
+          "apns_config": []
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "google_signin_service": {
+          "status": 1
+        },
+        "ads_service": {
+          "status": 1
+        }
+      }
+    }
+  ],
+  "client_info": [],
+  "ARTIFACT_VERSION": "1"
+}
