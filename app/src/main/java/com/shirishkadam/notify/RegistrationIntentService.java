@@ -7,6 +7,7 @@ import android.preference.PreferenceManager;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 
+import com.google.android.gms.gcm.GcmPubSub;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 import com.google.android.gms.iid.InstanceID;
 
@@ -31,12 +32,16 @@ public class RegistrationIntentService extends IntentService {
         try{
 
             InstanceID instanceID = InstanceID.getInstance(this);
-            String token = instanceID.getToken(getString(R.string.gcm_senderId), GoogleCloudMessaging.INSTANCE_ID_SCOPE,null);
+            String token = instanceID.getToken(getString(R.string.gcm_senderId), GoogleCloudMessaging.INSTANCE_ID_SCOPE, null);
 
-            Log.i("Notify:GCMToken",token);
+            Log.d("Notify:GCMToken", token);
 
-            sendRegistrationToServer(token);
+            GcmPubSub pubSub = GcmPubSub.getInstance(this);
+            pubSub.subscribe(token, "/topics/test", null);
 
+            //pubSub.unsubscribe(token,"/topics/test");
+
+            sf.edit().putString("RegistrationID",token).apply();
             sf.edit().putBoolean(SENT_TOKEN_TO_SERVER,true).apply();
 
         } catch (Exception e){
@@ -50,7 +55,4 @@ public class RegistrationIntentService extends IntentService {
         LocalBroadcastManager.getInstance(this).sendBroadcast(registration_complete);
     }
 
-    private void sendRegistrationToServer(String token) {
-
-    }
 }

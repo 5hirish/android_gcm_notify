@@ -24,22 +24,12 @@ public class GCMListenerService extends GcmListenerService {
     @Override
     public void onMessageReceived(String from,Bundle data){
         String message = data.getString("message");
-        Log.d("Notify:GCMListen", "From: " + from);
-        Log.d("Notify:GCMListen", "Message: " + message);
 
-        /**
-         * Production applications would usually process the message here.
-         * Eg: - Syncing with server.
-         *     - Store message in local database.
-         *     - Update UI.
-         */
+        if(from.startsWith("/topics/test")){
+            Log.d("Notify:GCMTopic","Got message");
 
-        /**
-         * In some cases it may be useful to show a notification indicating to the user
-         * that a message was received.
-         */
-
-        sendNotification(message);
+            sendNotification(message);
+        }
 
     }
 
