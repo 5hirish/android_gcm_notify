@@ -5,6 +5,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.content.LocalBroadcastManager;
@@ -20,7 +22,7 @@ public class MainActivity extends AppCompatActivity {
 
     private BroadcastReceiver registration;
     private ProgressBar registration_bar;
-    private TextView info;
+    private TextView info,display;
 
     public static final String SENT_TOKEN_TO_SERVER = "sentTokenToServer";
     public static final String REGISTRATION_COMPLETE = "registrationComplete";
@@ -32,6 +34,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        display = (TextView)findViewById(R.id.disp);
 
         registration_bar = (ProgressBar) findViewById(R.id.registration_Bar);
         registration = new BroadcastReceiver() {
@@ -50,6 +54,31 @@ public class MainActivity extends AppCompatActivity {
             }
 
         };
+
+        SQLiteHelper db = new SQLiteHelper(getApplicationContext());
+        SQLiteDatabase dbr = db.getReadableDatabase();
+
+        String[] col = {db.dbGCM_Message_Id,db.dbGCM_Message_Topic,db.dbGCM_Message_Title,db.dbGCM_Message_Message,db.dbGCM_Message_Time};
+
+        Cursor cur =dbr.query(db.dbGCM_table,col,null,null,null,null,null);
+
+        if(cur!=null){
+            while (cur.moveToNext()){
+                int id =cur.getInt(cur.getColumnIndex(db.dbGCM_Message_Id));
+                String topic =cur.getString(cur.getColumnIndex(db.dbGCM_Message_Topic));
+                String title =cur.getString(cur.getColumnIndex(db.dbGCM_Message_Title));
+                String message =cur.getString(cur.getColumnIndex(db.dbGCM_Message_Message));
+                String time =cur.getString(cur.getColumnIndex(db.dbGCM_Message_Time));
+
+                display.append(id+":"+topic+">"+title+">"+message+">"+time+"\n");
+
+
+            }
+        }cur.close();
+
+        dbr.close();
+
+
 
         info = (TextView) findViewById(R.id.info);
 
