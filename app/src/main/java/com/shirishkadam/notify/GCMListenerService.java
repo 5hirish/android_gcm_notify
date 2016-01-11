@@ -2,8 +2,10 @@ package com.shirishkadam.notify;
 
 import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Bundle;
@@ -29,8 +31,25 @@ public class GCMListenerService extends GcmListenerService {
             Log.d("Notify:GCMTopic","Got message");
 
             sendNotification(message);
+
+            insertMessage(message);
         }
 
+    }
+
+    private void insertMessage(String message) {
+        SQLiteHelper db = new SQLiteHelper(getApplicationContext());
+        SQLiteDatabase dbw = db.getWritableDatabase();
+
+        ContentValues insert_msg = new ContentValues();
+        insert_msg.put(db.dbGCM_Message_Topic,"/topics/test");
+        insert_msg.put(db.dbGCM_Message_Title,"GCM Message Title");
+        insert_msg.put(db.dbGCM_Message_Message,message);
+        insert_msg.put(db.dbGCM_Message_Time,"Now...");
+
+        long res = dbw.insert(db.dbGCM_table,null,insert_msg);
+
+        dbw.close();
     }
 
     private void sendNotification(String message) {
