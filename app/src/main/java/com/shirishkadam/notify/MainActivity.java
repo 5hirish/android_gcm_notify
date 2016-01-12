@@ -5,8 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
@@ -47,10 +45,12 @@ public class MainActivity extends AppCompatActivity {
 
         getSupportActionBar().hide();
 
+        info = (TextView) findViewById(R.id.info);
+
         ConnectivityManager cm = (ConnectivityManager)getSystemService(CONNECTIVITY_SERVICE);
         NetworkInfo ni = cm.getActiveNetworkInfo();
 
-        if(ni != null && ni.isConnected()){
+        //if(ni != null && ni.isConnected()){
 
             registration_bar = (ProgressBar) findViewById(R.id.registration_Bar);
             registration = new BroadcastReceiver() {
@@ -70,23 +70,27 @@ public class MainActivity extends AppCompatActivity {
 
             };
 
-        }else {
+        /*}else {
             info.setText(R.string.no_net);
-        }
+        }*/
 
         final SharedPreferences sf = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         boolean sentToken = sf.getBoolean(SENT_TOKEN_TO_SERVER, false);
 
         if(sentToken) {
+
             Button fe = (Button) findViewById(R.id.fe);
             Button se = (Button) findViewById(R.id.se);
             Button te = (Button) findViewById(R.id.te);
             Button be = (Button) findViewById(R.id.be);
 
+            final Intent in = new Intent(MainActivity.this,MessageActivity.class);
+
             fe.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     sf.edit().putString("Topic",Topic_FE).apply();
+                    startActivity(in);
                 }
             });
 
@@ -94,6 +98,8 @@ public class MainActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View view) {
                     sf.edit().putString("Topic",Topic_SE).apply();
+                    startActivity(in);
+
                 }
             });
 
@@ -101,6 +107,8 @@ public class MainActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View view) {
                     sf.edit().putString("Topic",Topic_TE).apply();
+                    startActivity(in);
+
                 }
             });
 
@@ -108,6 +116,8 @@ public class MainActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View view) {
                     sf.edit().putString("Topic",Topic_BE).apply();
+                    startActivity(in);
+
                 }
             });
 
@@ -115,30 +125,11 @@ public class MainActivity extends AppCompatActivity {
         } else {
             Toast.makeText(getApplicationContext(),"Please wait, Registering",Toast.LENGTH_LONG).show();
         }
-        SQLiteHelper db = new SQLiteHelper(getApplicationContext());
-        SQLiteDatabase dbr = db.getReadableDatabase();
-
-        String[] col = {db.dbGCM_Message_Id,db.dbGCM_Message_Topic,db.dbGCM_Message_Title,db.dbGCM_Message_Message,db.dbGCM_Message_Time};
-
-        Cursor cur =dbr.query(db.dbGCM_table,col,null,null,null,null,null);
-
-        if(cur!=null){
-            while (cur.moveToNext()){
-                int id =cur.getInt(cur.getColumnIndex(db.dbGCM_Message_Id));
-                String topic =cur.getString(cur.getColumnIndex(db.dbGCM_Message_Topic));
-                String title =cur.getString(cur.getColumnIndex(db.dbGCM_Message_Title));
-                String message =cur.getString(cur.getColumnIndex(db.dbGCM_Message_Message));
-                String time =cur.getString(cur.getColumnIndex(db.dbGCM_Message_Time));
-
-            }cur.close();
-        }
-
-        dbr.close();
 
         info = (TextView) findViewById(R.id.info);
 
         if(checkPlayServices()){
-            Intent in = new Intent(this, RegistrationIntentService.class);
+            Intent in = new Intent(MainActivity.this, RegistrationIntentService.class);
             startService(in);
         }
     }
