@@ -9,27 +9,81 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.shirishkadam.notify.MainActivity">
 
-    <TextView android:text="@string/registering_message"
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/fe"
+        android:id="@+id/fe"
+        android:layout_marginTop="50dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignLeft="@+id/se"
+        android:layout_alignStart="@+id/se"
+        android:layout_alignRight="@+id/te"
+        android:layout_alignEnd="@+id/te" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/se"
+        android:id="@+id/se"
+        android:layout_marginTop="20dp"
+        android:layout_below="@+id/fe"
+        android:layout_centerHorizontal="true" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/te"
+        android:id="@+id/te"
+        android:layout_marginTop="20dp"
+        android:layout_below="@+id/se"
+        android:layout_alignLeft="@+id/se"
+        android:layout_alignStart="@+id/se"
+        android:layout_alignRight="@+id/se"
+        android:layout_alignEnd="@+id/se" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/be"
+        android:id="@+id/be"
+        android:layout_marginTop="20dp"
+        android:layout_below="@+id/te"
+        android:layout_alignLeft="@+id/te"
+        android:layout_alignStart="@+id/te"
+        android:layout_alignRight="@+id/te"
+        android:layout_alignEnd="@+id/te" />
+
+    <TextView
+        android:text="@string/registering_message"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/info"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
+        android:gravity="center"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:layout_below="@+id/registration_Bar"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="30dp" />
 
     <ProgressBar
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/registration_Bar"
+        android:layout_below="@+id/be"
         android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"/>
+        android:layout_marginTop="30dp" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text=""
-        android:id="@+id/disp"
-        android:layout_marginBottom="63dp"
-        android:layout_alignParentBottom="true"
+        android:text="@string/subscribe_title"
+        android:id="@+id/title"
+        android:gravity="center"
+        android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true" />
+
 
 </RelativeLayout>
