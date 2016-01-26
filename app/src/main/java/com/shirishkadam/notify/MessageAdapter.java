@@ -6,7 +6,9 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -33,6 +35,13 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
     public void onBindViewHolder(ViewHolder holder, int position) {
         holder.title.setText(messageDatas.get(position).Title);
         holder.title.setText(messageDatas.get(position).Message);
+
+        holder.rl.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(context,"Click",Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     @Override
@@ -48,6 +57,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
     public class ViewHolder extends RecyclerView.ViewHolder {
 
         CardView cv;
+        RelativeLayout rl;
         TextView title;
         TextView message;
 
@@ -55,6 +65,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
             super(itemView);
 
             cv = (CardView) itemView.findViewById(R.id.message_card_view);
+            rl = (RelativeLayout) itemView.findViewById(R.id.rl);
             title = (TextView) itemView.findViewById(R.id.title);
             message = (TextView) itemView.findViewById(R.id.body);
 

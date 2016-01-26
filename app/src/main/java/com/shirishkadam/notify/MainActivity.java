@@ -16,7 +16,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
@@ -74,10 +73,15 @@ public class MainActivity extends AppCompatActivity {
             info.setText(R.string.no_net);
         }*/
 
+        if(checkPlayServices()){
+            Intent ing = new Intent(MainActivity.this, RegistrationIntentService.class);
+            startService(ing);
+        }
+
         final SharedPreferences sf = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         boolean sentToken = sf.getBoolean(SENT_TOKEN_TO_SERVER, false);
 
-        if(sentToken) {
+        //if(sentToken) {
 
             Button fe = (Button) findViewById(R.id.fe);
             Button se = (Button) findViewById(R.id.se);
@@ -89,7 +93,7 @@ public class MainActivity extends AppCompatActivity {
             fe.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    sf.edit().putString("Topic",Topic_FE).apply();
+                    in.putExtra("Topic", Topic_FE);
                     startActivity(in);
                 }
             });
@@ -97,41 +101,33 @@ public class MainActivity extends AppCompatActivity {
             se.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    sf.edit().putString("Topic",Topic_SE).apply();
+                    in.putExtra("Topic", Topic_SE);
                     startActivity(in);
-
                 }
             });
 
             te.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    sf.edit().putString("Topic",Topic_TE).apply();
+                    in.putExtra("Topic", Topic_TE);
                     startActivity(in);
-
                 }
             });
 
             be.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    sf.edit().putString("Topic",Topic_BE).apply();
+                    in.putExtra("Topic",Topic_BE);
                     startActivity(in);
-
                 }
             });
 
 
-        } else {
-            Toast.makeText(getApplicationContext(),"Please wait, Registering",Toast.LENGTH_LONG).show();
-        }
+        //} else {
+          //  Toast.makeText(getApplicationContext(),"Please wait, Registering",Toast.LENGTH_LONG).show();
+        //}
 
         info = (TextView) findViewById(R.id.info);
-
-        if(checkPlayServices()){
-            Intent in = new Intent(MainActivity.this, RegistrationIntentService.class);
-            startService(in);
-        }
     }
 
     @Override

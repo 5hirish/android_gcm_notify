@@ -20,6 +20,11 @@ public class RegistrationIntentService extends IntentService {
     public static final String SENT_TOKEN_TO_SERVER = "sentTokenToServer";
     public static final String REGISTRATION_COMPLETE = "registrationComplete";
 
+    public static final String Topic_FE = "/topics/FE";
+    public static final String Topic_SE = "/topics/SE";
+    public static final String Topic_TE = "/topics/TE";
+    public static final String Topic_BE = "/topics/BE";
+
     public RegistrationIntentService() {
         super(NAME);
     }
@@ -37,7 +42,12 @@ public class RegistrationIntentService extends IntentService {
             Log.d("Notify:GCMToken", token);
 
             GcmPubSub pubSub = GcmPubSub.getInstance(this);
-            pubSub.subscribe(token, "/topics/test", null);
+            //pubSub.subscribe(token, "/topics/test", null);
+            pubSub.subscribe(token,Topic_FE, null);
+            pubSub.subscribe(token,Topic_SE, null);
+            pubSub.subscribe(token,Topic_TE, null);
+            pubSub.subscribe(token,Topic_BE, null);
+
 
             //pubSub.unsubscribe(token,"/topics/test");
 

@@ -1,5 +1,6 @@
 package com.shirishkadam.notify;
 
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -7,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -17,12 +19,34 @@ public class MessageActivity extends AppCompatActivity {
     RecyclerView.LayoutManager rvlayoutmanager;
     ArrayList<MessageData> Message_Dataset;
 
+    public static final String Topic_FE = "/topics/FE";
+    public static final String Topic_SE = "/topics/SE";
+    public static final String Topic_TE = "/topics/TE";
+    public static final String Topic_BE = "/topics/BE";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_message);
 
+        Intent in = getIntent();
+        String in_topic = in.getStringExtra("Topic"),selected_topic = "";
         //Activity activity = MessageActivity.this;
+
+        switch (in_topic){
+            case Topic_FE:
+                selected_topic = "First Year";
+                break;
+            case Topic_SE:
+                selected_topic = "Second Year";
+                break;
+            case Topic_TE:
+                selected_topic = "Third Year";
+                break;
+            case Topic_BE:
+                selected_topic = "Final Year";
+                break;
+        }
 
         rv=(RecyclerView)findViewById(R.id.recycler_view);
         //rv.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
@@ -37,8 +61,9 @@ public class MessageActivity extends AppCompatActivity {
         SQLiteDatabase dbr = db.getReadableDatabase();
 
         String[] col = {db.dbGCM_Message_Id,db.dbGCM_Message_Topic,db.dbGCM_Message_Title,db.dbGCM_Message_Message,db.dbGCM_Message_Time};
+        String where = db.dbGCM_Message_Topic+" = '"+selected_topic+"'";
 
-        Cursor cur =dbr.query(db.dbGCM_table,col,null,null,null,null,null);
+        Cursor cur =dbr.query(db.dbGCM_table,col,where,null,null,null,db.dbGCM_Message_Id+" DESC");
 
         if(cur!=null){
             while (cur.moveToNext()){
@@ -51,6 +76,8 @@ public class MessageActivity extends AppCompatActivity {
                 Message_Dataset.add(new MessageData(id,topic,title,message,time));
 
             }cur.close();
+        }else {
+            Toast.makeText(getApplicationContext(),"No new messages!",Toast.LENGTH_LONG).show();
         }
 
         dbr.close();
