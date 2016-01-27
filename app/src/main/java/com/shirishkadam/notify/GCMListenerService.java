@@ -40,54 +40,62 @@ public class GCMListenerService extends GcmListenerService {
             Log.d("Notify:GCMTopic", "Got message");
             String topic="First Year";
 
-            sendNotification(title,message);
+            long id = insertMessage(topic,title,message,time);
 
-            insertMessage(topic,title,message,time);
+            sendNotification(title,message,id);
+
         }else if(from.startsWith(Topic_SE)){
             Log.d("Notify:GCMTopic", "Got message");
             String topic="Second Year";
 
-            sendNotification(title,message);
+            long id = insertMessage(topic,title,message,time);
 
-            insertMessage(topic,title,message,time);
+            sendNotification(title,message,id);
+
         }else if(from.startsWith(Topic_TE)){
             Log.d("Notify:GCMTopic", "Got message");
             String topic="Third Year";
 
-            sendNotification(title,message);
+            long id = insertMessage(topic,title,message,time);
 
-            insertMessage(topic,title,message,time);
+            sendNotification(title,message,id);
+
         }else if(from.startsWith(Topic_BE)){
             Log.d("Notify:GCMTopic", "Got message");
             String topic="Final Year";
 
-            sendNotification(title,message);
+            long id = insertMessage(topic,title,message,time);
 
-            insertMessage(topic,title,message,time);
+            sendNotification(title,message,id);
+
         }
 
     }
 
-    private void insertMessage(String topic, String title, String message, String time) {
+    private long insertMessage(String topic, String title, String message, String time) {
         SQLiteHelper db = new SQLiteHelper(getApplicationContext());
         SQLiteDatabase dbw = db.getWritableDatabase();
 
         ContentValues insert_msg = new ContentValues();
         insert_msg.put(db.dbGCM_Message_Topic,topic);
         insert_msg.put(db.dbGCM_Message_Title,title);
-        insert_msg.put(db.dbGCM_Message_Message,message);
-        insert_msg.put(db.dbGCM_Message_Time,time);
+        insert_msg.put(db.dbGCM_Message_Message, message);
+        insert_msg.put(db.dbGCM_Message_Time, time);
 
-        long res = dbw.insert(db.dbGCM_table,null,insert_msg);
+        long id = dbw.insert(db.dbGCM_table,null,insert_msg);
 
         dbw.close();
+
+        return id;
     }
 
-    private void sendNotification(String title, String message) {
+    private void sendNotification(String title, String message,long rowid) {
         SharedPreferences sf = PreferenceManager.getDefaultSharedPreferences(this);
         int id = sf.getInt("Notification_Id",0);
+        int row_id = (int)rowid;
 
-        Intent intent = new Intent(this, MainActivity.class);
+        Intent intent = new Intent(this, DetailActivity.class);
+        intent.putExtra("MessageId",row_id);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, id , intent, PendingIntent.FLAG_ONE_SHOT);
 

@@ -12,5 +12,8 @@
     <string name="te">Third Year</string>
     <string name="subscribe_title">Select a topic to Subscribe</string>
     <string name="no_net">Network connection failed</string>
+    <string name="about">About</string>
+    <string name="unsubscribe">Unsubscribe</string>
+    <string name="subscribe">Subscribe</string>
 
 </resources>

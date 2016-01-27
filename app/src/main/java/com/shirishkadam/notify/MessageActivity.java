@@ -1,15 +1,22 @@
 package com.shirishkadam.notify;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.google.android.gms.gcm.GcmPubSub;
+
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class MessageActivity extends AppCompatActivity {
@@ -18,6 +25,7 @@ public class MessageActivity extends AppCompatActivity {
     RecyclerView.Adapter rvadpter;
     RecyclerView.LayoutManager rvlayoutmanager;
     ArrayList<MessageData> Message_Dataset;
+    String in_topic, selected_topic = "";
 
     public static final String Topic_FE = "/topics/FE";
     public static final String Topic_SE = "/topics/SE";
@@ -30,7 +38,7 @@ public class MessageActivity extends AppCompatActivity {
         setContentView(R.layout.activity_message);
 
         Intent in = getIntent();
-        String in_topic = in.getStringExtra("Topic"),selected_topic = "";
+        in_topic = in.getStringExtra("Topic");
         //Activity activity = MessageActivity.this;
 
         switch (in_topic){
@@ -47,6 +55,10 @@ public class MessageActivity extends AppCompatActivity {
                 selected_topic = "Final Year";
                 break;
         }
+
+        setTitle(selected_topic);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
 
         rv=(RecyclerView)findViewById(R.id.recycler_view);
         //rv.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
@@ -87,7 +99,59 @@ public class MessageActivity extends AppCompatActivity {
 
         rv.setItemAnimator(new DefaultItemAnimator());
     }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_message_activity, menu);
+        return true;
+    }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int menu_id = item.getItemId();
+        SharedPreferences sf = PreferenceManager.getDefaultSharedPreferences(this);
+        String token = sf.getString("RegistrationID", "");
+        GcmPubSub pubSub = GcmPubSub.getInstance(this);
+
+
+        //noinspection SimplifiableIfStatement
+        switch (menu_id){
+            case android.R.id.home:
+                finish();
+                break;
+
+            case R.id.action_about:
+
+                Intent in = new Intent(this,AboutActivity.class);
+                startActivity(in);
+
+                break;
+
+            case R.id.action_unsubscribe:
+                try {
+                    pubSub.unsubscribe(token, in_topic);                                            //Unsubscribe from a topic
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                Toast.makeText(getApplicationContext(),"You are now Un-Subscribed from this topic..!",Toast.LENGTH_SHORT).show();
+
+                break;
+            case R.id.action_subscribe:
+                try {
+                    pubSub.subscribe(token, in_topic, null);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                Toast.makeText(getApplicationContext(),"You are now Subscribed to this topic..!",Toast.LENGTH_SHORT).show();
+
+                break;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
     public class MessageData {
         int Id;
         String Topic;
