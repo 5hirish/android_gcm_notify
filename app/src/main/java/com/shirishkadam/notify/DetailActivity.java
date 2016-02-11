@@ -95,6 +95,7 @@ public class DetailActivity extends AppCompatActivity {
                 SQLiteDatabase dbw = db.getWritableDatabase();
 
                 dbw.delete(db.dbGCM_table,db.dbGCM_Message_Id+"="+id,null);
+
                 finish();
         }
 

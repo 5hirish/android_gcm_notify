@@ -1,0 +1,54 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.shirishkadam.notify.SelectFragment">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center">
+
+        <Button
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:text="@string/fe"
+            android:id="@+id/fe"
+            android:layout_marginTop="10dp"
+            android:background="@color/white"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"/>
+
+        <Button
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:text="@string/se"
+            android:id="@+id/se"
+            android:layout_marginTop="10dp"
+            android:background="@color/white"
+            android:layout_below="@+id/fe"
+            android:layout_centerHorizontal="true" />
+
+        <Button
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:text="@string/te"
+            android:layout_marginTop="10dp"
+            android:id="@+id/te"
+            android:background="@color/white"
+            android:layout_below="@+id/se"
+            android:layout_centerHorizontal="true"/>
+
+        <Button
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:text="@string/be"
+            android:layout_marginTop="10dp"
+            android:id="@+id/be"
+            android:background="@color/white"
+            android:layout_below="@+id/te"
+            android:layout_centerHorizontal="true"/>
+
+    </RelativeLayout>
+
+</FrameLayout>

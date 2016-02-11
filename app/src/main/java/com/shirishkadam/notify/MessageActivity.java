@@ -67,6 +67,15 @@ public class MessageActivity extends AppCompatActivity {
         rvlayoutmanager = new LinearLayoutManager(this);
         rv.setLayoutManager(rvlayoutmanager);
 
+        refresh_dataset();
+
+        rvadpter = new MessageAdapter(getApplicationContext(),Message_Dataset);
+        rv.setAdapter(rvadpter);
+
+        rv.setItemAnimator(new DefaultItemAnimator());
+    }
+
+    void refresh_dataset(){
         Message_Dataset = new ArrayList<MessageData>();
 
         SQLiteHelper db = new SQLiteHelper(getApplicationContext());
@@ -94,11 +103,10 @@ public class MessageActivity extends AppCompatActivity {
 
         dbr.close();
 
-        rvadpter = new MessageAdapter(getApplicationContext(),Message_Dataset);
-        rv.setAdapter(rvadpter);
 
-        rv.setItemAnimator(new DefaultItemAnimator());
     }
+
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
