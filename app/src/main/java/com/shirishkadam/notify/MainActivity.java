@@ -16,6 +16,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
@@ -69,9 +70,9 @@ public class MainActivity extends AppCompatActivity {
 
             };
 
-        /*}else {
-            info.setText(R.string.no_net);
-        }*/
+        //}else {
+            //info.setText(R.string.no_net);
+        //}
 
         if(checkPlayServices()){
             Intent ing = new Intent(MainActivity.this, RegistrationIntentService.class);
@@ -81,7 +82,7 @@ public class MainActivity extends AppCompatActivity {
         final SharedPreferences sf = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         boolean sentToken = sf.getBoolean(SENT_TOKEN_TO_SERVER, false);
 
-        //if(sentToken) {
+        if(sentToken) {
 
             Button fe = (Button) findViewById(R.id.fe);
             Button se = (Button) findViewById(R.id.se);
@@ -123,9 +124,9 @@ public class MainActivity extends AppCompatActivity {
             });
 
 
-        //} else {
-          //  Toast.makeText(getApplicationContext(),"Please wait, Registering",Toast.LENGTH_LONG).show();
-        //}
+        } else {
+            Toast.makeText(getApplicationContext(), "Please wait, Registering", Toast.LENGTH_LONG).show();
+        }
 
         info = (TextView) findViewById(R.id.info);
     }

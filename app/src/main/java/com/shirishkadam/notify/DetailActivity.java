@@ -12,6 +12,7 @@ import android.widget.TextView;
 public class DetailActivity extends AppCompatActivity {
 
     TextView mtitle,mmessage,mtopic,mtime;
+    int id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,7 +41,7 @@ public class DetailActivity extends AppCompatActivity {
 
         if(cur!=null){
             while (cur.moveToNext()){
-                int id =cur.getInt(cur.getColumnIndex(db.dbGCM_Message_Id));
+                id =cur.getInt(cur.getColumnIndex(db.dbGCM_Message_Id));
                 String topic =cur.getString(cur.getColumnIndex(db.dbGCM_Message_Topic));
                 String title =cur.getString(cur.getColumnIndex(db.dbGCM_Message_Title));
                 String message =cur.getString(cur.getColumnIndex(db.dbGCM_Message_Message));
@@ -88,6 +89,13 @@ public class DetailActivity extends AppCompatActivity {
                 startActivity(in);
 
                 break;
+            case R.id.action_delete:
+
+                SQLiteHelper db = new SQLiteHelper(getApplicationContext());
+                SQLiteDatabase dbw = db.getWritableDatabase();
+
+                dbw.delete(db.dbGCM_table,db.dbGCM_Message_Id+"="+id,null);
+                finish();
         }
 
         return super.onOptionsItemSelected(item);

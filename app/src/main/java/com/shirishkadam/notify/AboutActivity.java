@@ -22,7 +22,7 @@ public class AboutActivity extends AppCompatActivity {
         String token = sf.getString("RegistrationID", "");
 
         TextView info = (TextView)findViewById(R.id.info);
-        //info.setText("Token: "+token);
+        info.setText("Token: "+token);
         Button fork = (Button)findViewById(R.id.fork);
         fork.setOnClickListener(new View.OnClickListener() {
             @Override
