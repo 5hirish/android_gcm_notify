@@ -19,6 +19,7 @@ public class DetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        setTitle("Message");
 
         Intent in = getIntent();
         int messageId = in.getIntExtra("MessageId", 0);

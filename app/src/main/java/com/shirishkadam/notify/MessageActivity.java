@@ -106,6 +106,49 @@ public class MessageActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    public void onRestart() {
+        super.onRestart();
+
+        Intent in = getIntent();
+        in_topic = in.getStringExtra("Topic");
+        //Activity activity = MessageActivity.this;
+
+        switch (in_topic){
+            case Topic_FE:
+                selected_topic = "First Year";
+                break;
+            case Topic_SE:
+                selected_topic = "Second Year";
+                break;
+            case Topic_TE:
+                selected_topic = "Third Year";
+                break;
+            case Topic_BE:
+                selected_topic = "Final Year";
+                break;
+        }
+
+        setTitle(selected_topic);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+
+        rv=(RecyclerView)findViewById(R.id.recycler_view);
+        //rv.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
+        rv.setHasFixedSize(true);
+
+        rvlayoutmanager = new LinearLayoutManager(this);
+        rv.setLayoutManager(rvlayoutmanager);
+
+        refresh_dataset();
+
+        rvadpter = new MessageAdapter(getApplicationContext(),Message_Dataset);
+        rv.setAdapter(rvadpter);
+
+        rv.setItemAnimator(new DefaultItemAnimator());
+    }
+
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
