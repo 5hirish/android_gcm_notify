@@ -103,7 +103,6 @@ public class MessageActivity extends AppCompatActivity {
 
         dbr.close();
 
-
     }
 
     @Override
