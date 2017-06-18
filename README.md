@@ -12,3 +12,8 @@ Note: Here are the topics currently in this app (Can be modified as per use case
 2) "/topics/SE";
 3) "/topics/TE";
 4) "/topics/BE";
+
+### Need to setup the GCM API:
+> https://developers.google.com/cloud-messaging/android/client
+
+Firebase Cloud Messaging (FCM) is the new version of GCM. It inherits the reliable and scalable GCM infrastructure, plus new features! If you are integrating messaging in a new app, start with FCM. GCM users are strongly recommended to upgrade to FCM, in order to benefit from new FCM features today and in the future. This app too soon will be moving on to FCM.
